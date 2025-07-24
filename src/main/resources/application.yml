@@ -4,15 +4,19 @@ spring:
       server:
         webflux:
           routes:
+            - id: auth-service
+              uri: ${INTERNAL_DOMAIN_URL}:${INTERNAL_AUTH_PORT}
+              predicates:
+              - Path=/auth/**
+            - id: file-service
+              uri: ${INTERNAL_DOMAIN_URL}:${INTERNAL_FILE_PORT}
+              predicates:
+              - Path=/files/**
             - id: user-service
-              uri: http://localhost:50010
+              uri: ${INTERNAL_DOMAIN_URL}:${INTERNAL_USER_PORT}
               predicates:
               - Path=/users/**
             - id: universe-service
-              uri: http://localhost:50020
+              uri: ${INTERNAL_DOMAIN_URL}:${INTERNAL_UNIVERSE_PORT}
               predicates:
               - Path=/universes/**
-            - id: file-service
-              uri: http://localhost:50030
-              predicates:
-                - Path=/files/**
